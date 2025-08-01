@@ -50,11 +50,11 @@ const fetchUserProfile = async () => {
     const res = await api.get('/user/profile');
     setBalance(res.data.balance);
     setUsername(res.data.username);
-    console.log('Balance refreshed:', res.data.balance); 
   } catch {
     Swal.fire('Error', 'Failed to fetch user profile', 'error');
   }
 };
+
 
 
   useEffect(() => {
