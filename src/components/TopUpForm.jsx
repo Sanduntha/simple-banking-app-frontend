@@ -7,21 +7,36 @@ export default function TopUpForm({ onAction }) {
   const [amount, setAmount] = useState('');
 
 const handleTopUp = async () => {
-    const amt = parseFloat(amount);
-    if (isNaN(amt) || amt <= 0) {
-      Swal.fire('Invalid Amount', 'Please enter a valid amount greater than zero.', 'warning');
-      return;
-    }
+  const amt = parseFloat(amount);
 
-    try {
-      await api.post('/transactions/topup', { amount: amt });
-      Swal.fire('Success', 'Top-up successful!', 'success');
-      setAmount('');
-      onAction();
-    } catch {
-      Swal.fire('Failed', 'Top-up failed. Please try again.', 'error');
-    }
-  };
+  if (isNaN(amt) || amt <= 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Invalid Amount',
+      text: 'Please enter a valid amount greater than zero.',
+    });
+    return;
+  }
+
+  try {
+    await api.post('/transactions/topup', { amount: amt });
+    Swal.fire({
+      icon: 'success',
+      title: 'Top-up Successful!',
+      text: `Your balance has been increased by $${amt.toFixed(2)}.`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+    setAmount('');
+    onAction();
+  } catch {
+    Swal.fire({
+      icon: 'error',
+      title: 'Top-up Failed',
+      text: 'Something went wrong. Please try again.',
+    });
+  }
+};
 
   return (
     <Box>

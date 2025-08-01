@@ -66,14 +66,7 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    if (balance <= 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Low balance',
-        text: 'Your balance is zero or too low. Please recharge to continue using services.',
-        confirmButtonText: 'OK',
-      });
-    }
+    // Alert removed, showing low balance in UI instead
   }, [balance]);
 
   const handleLogout = () => {
@@ -230,6 +223,17 @@ export default function DashboardPage() {
                 </Button>
               </Grid>
             </Grid>
+
+            {/* Low Balance Message */}
+            {balance < 10 && (
+              <Box mt={2} width="100%">
+                <Card sx={{ bgcolor: '#fff3cd', borderLeft: '6px solid #ffecb5', p: 2 }}>
+                  <Typography variant="body1" color="warning.main">
+                    ⚠️ Low Balance: Your balance is LKR {balance.toFixed(2)}. Please recharge to continue using services.
+                  </Typography>
+                </Card>
+              </Box>
+            )}
           </Box>
         </Card>
 

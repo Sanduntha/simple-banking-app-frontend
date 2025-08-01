@@ -23,10 +23,11 @@ export default function PayBillForm({ onAction, balance }) {
     }
     const total = amt + charge;
 
-    if (balance < total) {
-      Swal.fire('Insufficient Balance', `You need $${total.toFixed(2)} to pay this bill including charges. Please recharge.`, 'error');
-      return;
-    }
+  if (balance < total) {
+  Swal.fire('Insufficient Balance', `You need $${total.toFixed(2)} to pay this bill including charges. Please recharge.`, 'error');
+  return;
+}
+
 
     try {
       await api.post('/transactions/paybill', { biller, amount: amt });
