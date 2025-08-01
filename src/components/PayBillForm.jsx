@@ -14,7 +14,6 @@ export default function PayBillForm({ onAction, balance }) {
       return;
     }
 
-    // Calculate extra charge for Electricity and Water
     let charge = 0;
     if (biller === 'Electricity') {
       charge = amt * 0.10;

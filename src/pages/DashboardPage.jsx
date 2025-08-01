@@ -48,7 +48,7 @@ export default function DashboardPage() {
 const fetchUserProfile = async () => {
   try {
     const res = await api.get('/user/profile');
-    console.log('Fetched profile:', res.data); // 👈 Log here
+    console.log('Fetched profile:', res.data);
     setBalance(res.data.balance);
     setUsername(res.data.username);
   } catch {
@@ -92,7 +92,6 @@ const fetchUserProfile = async () => {
       }}
     >
       <Container maxWidth="md">
-        {/* Header */}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -122,7 +121,6 @@ const fetchUserProfile = async () => {
           </Button>
         </Box>
 
-        {/* Balance and Actions */}
         <Card
           elevation={6}
           sx={{
@@ -222,7 +220,6 @@ const fetchUserProfile = async () => {
             </Grid>
           </Box>
 
-          {/* Inline Low Balance Alert */}
           {balance < 10 && (
             <Alert
               severity="warning"
@@ -238,7 +235,6 @@ const fetchUserProfile = async () => {
           )}
         </Card>
 
-        {/* Transaction History */}
         <Card
           elevation={6}
           sx={{
@@ -257,7 +253,6 @@ const fetchUserProfile = async () => {
           </CardContent>
         </Card>
 
-        {/* Dialogs */}
         <Dialog open={openTopUp} onClose={() => setOpenTopUp(false)} fullWidth maxWidth="sm">
           <DialogTitle>Top-Up Balance</DialogTitle>
           <DialogContent dividers>

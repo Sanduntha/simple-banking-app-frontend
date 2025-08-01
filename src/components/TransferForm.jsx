@@ -41,9 +41,9 @@ export default function TransferForm({ balance, onAction }) {
 
       setAmount('');
       setRecipientEmail('');
-      onAction(); // refresh dashboard (balance + transactions)
+      onAction(); 
     } catch (error) {
-      console.error('Transfer failed:', error); // Debug log
+      console.error('Transfer failed:', error);
 
       if (error.response) {
         console.error('Error response:', error.response);
