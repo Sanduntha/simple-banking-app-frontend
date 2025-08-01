@@ -62,7 +62,7 @@ export default function DashboardPage() {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('token');
-        navigate('/login'); // Redirect to login page
+        navigate('/'); // Redirect to login page
       }
     });
   };
