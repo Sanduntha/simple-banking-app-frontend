@@ -56,7 +56,7 @@ export default function TransactionHistory({ transactions }) {
                 textAlign: 'center',
               }}
             >
-              ${amount.toFixed(2)}
+              LKR {amount.toFixed(2)}
             </Typography>
 
             <Typography

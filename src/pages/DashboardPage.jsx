@@ -48,13 +48,14 @@ export default function DashboardPage() {
 const fetchUserProfile = async () => {
   try {
     const res = await api.get('/user/profile');
-    console.log('Fetched profile:', res.data);
     setBalance(res.data.balance);
     setUsername(res.data.username);
+    console.log('Balance refreshed:', res.data.balance); 
   } catch {
     Swal.fire('Error', 'Failed to fetch user profile', 'error');
   }
 };
+
 
   useEffect(() => {
     fetchTransactions();
@@ -270,8 +271,14 @@ const fetchUserProfile = async () => {
         <Dialog open={openTransfer} onClose={() => setOpenTransfer(false)} fullWidth maxWidth="sm">
           <DialogTitle>Transfer Funds</DialogTitle>
           <DialogContent dividers>
-            <TransferForm balance={balance} onAction={() => { handleActionComplete(); setOpenTransfer(false); }} />
-          </DialogContent>
+    <TransferForm
+      balance={balance}
+      onAction={() => {
+        handleActionComplete();
+        setOpenTransfer(false);  
+      }}
+    />
+  </DialogContent>
         </Dialog>
       </Container>
     </Box>

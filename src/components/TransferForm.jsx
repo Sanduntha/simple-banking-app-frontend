@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import Swal from 'sweetalert2';
 import api from '../api/axiosInstance';
@@ -31,33 +31,16 @@ export default function TransferForm({ balance, onAction }) {
 
     try {
       const res = await api.post('/transactions/transfer', {
-         targetEmail: recipientEmail.trim(),
+        targetEmail: recipientEmail.trim(),
         amount: amt,
       });
 
-      const { newBalance } = res.data;
-
-      Swal.fire('Success', `Transfer completed! New Balance: LKR ${newBalance.toFixed(2)}`, 'success');
-
+      Swal.fire('Success', 'Transfer successful!', 'success');
       setAmount('');
       setRecipientEmail('');
       onAction(); 
     } catch (error) {
-      console.error('Transfer failed:', error);
-
-      if (error.response) {
-        console.error('Error response:', error.response);
-
-        if (error.response.status === 404) {
-          Swal.fire('Recipient Not Found', 'The recipient email does not exist.', 'error');
-        } else if (error.response.status === 400) {
-          Swal.fire('Bad Request', error.response.data.message || 'Invalid transfer data.', 'error');
-        } else {
-          Swal.fire('Failed', 'Transfer failed. Please try again.', 'error');
-        }
-      } else {
-        Swal.fire('Failed', 'Network error or server not responding.', 'error');
-      }
+      Swal.fire('Failed', 'Transfer failed. Please try again.', 'error');
     }
   };
 
