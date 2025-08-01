@@ -13,6 +13,7 @@ import {
   DialogContent,
   Grid,
   Chip,
+  Alert,
 } from '@mui/material';
 import Swal from 'sweetalert2';
 import TopUpForm from '../components/TopUpForm';
@@ -44,16 +45,16 @@ export default function DashboardPage() {
       Swal.fire('Error', 'Failed to fetch transactions', 'error');
     }
   };
-
-  const fetchUserProfile = async () => {
-    try {
-      const res = await api.get('/user/profile');
-      setBalance(res.data.balance);
-      setUsername(res.data.username);
-    } catch {
-      Swal.fire('Error', 'Failed to fetch user profile', 'error');
-    }
-  };
+const fetchUserProfile = async () => {
+  try {
+    const res = await api.get('/user/profile');
+    console.log('Fetched profile:', res.data); // 👈 Log here
+    setBalance(res.data.balance);
+    setUsername(res.data.username);
+  } catch {
+    Swal.fire('Error', 'Failed to fetch user profile', 'error');
+  }
+};
 
   useEffect(() => {
     fetchTransactions();
@@ -64,10 +65,6 @@ export default function DashboardPage() {
     fetchTransactions();
     fetchUserProfile();
   };
-
-  useEffect(() => {
-    // Alert removed, showing low balance in UI instead
-  }, [balance]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -223,18 +220,22 @@ export default function DashboardPage() {
                 </Button>
               </Grid>
             </Grid>
-
-            {/* Low Balance Message */}
-            {balance < 10 && (
-              <Box mt={2} width="100%">
-                <Card sx={{ bgcolor: '#fff3cd', borderLeft: '6px solid #ffecb5', p: 2 }}>
-                  <Typography variant="body1" color="warning.main">
-                    ⚠️ Low Balance: Your balance is LKR {balance.toFixed(2)}. Please recharge to continue using services.
-                  </Typography>
-                </Card>
-              </Box>
-            )}
           </Box>
+
+          {/* Inline Low Balance Alert */}
+          {balance < 10 && (
+            <Alert
+              severity="warning"
+              sx={{
+                mt: 3,
+                fontWeight: 'bold',
+                borderRadius: 2,
+                bgcolor: '#fffbe6',
+              }}
+            >
+              Your balance is low (LKR {balance.toFixed(2)}). Please top-up to continue using services.
+            </Alert>
+          )}
         </Card>
 
         {/* Transaction History */}
